@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const mockCoworkings = require('./mock-coworkings')
+const mockCoworkings = require('./mock-coworking')
 
-const sequelize = new Sequelize('coworking_07_2023', 'root', '', {
+const sequelize = new Sequelize('coworking-2023', 'root', '', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false

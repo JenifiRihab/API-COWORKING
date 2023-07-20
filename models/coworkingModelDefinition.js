@@ -5,10 +5,25 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        name: DataTypes.STRING,
+
+        name:{
+            type: DataTypes.STRING,
+            allowNull:false,
+            validate:{
+                notEmpty:{
+                    msg:"le nom ne peut pas etre vide"
+                }
+            },
+            unique:{
+                msg:"le nom est deja pris"
+            }
+        },
+
         price: DataTypes.JSON,
+        
         superficy: DataTypes.INTEGER,
         capacity: DataTypes.INTEGER,
         address: DataTypes.JSON,
+      
     });
 }

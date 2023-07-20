@@ -37,9 +37,11 @@ exports.createCoworking = (req, res) => {
             address: newCoworking.address
         })
         .then((result) => {
-            res.json({ message: 'Un coworking a bien été ajouté.', data: result })
+            res.status(201).json({ message: 'Un coworking a bien été ajouté.', data: result })
         })
         .catch((error) => {
+
+            if(error)
             res.json({ message: `Une erreur est survenue :  ${error}` })
         })
 }
