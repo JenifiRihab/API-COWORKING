@@ -1,8 +1,8 @@
-const mockCoworkings = require('./mock-coworking')
-const express = require('express')
-const morgan = require('morgan')
-const app = express()
-const port = 3000
+// const mockCoworkings = require('./mock-coworking')
+// const express = require('express')
+// const morgan = require('morgan')
+// const app = express()
+// const port = 3000
 
 // const{ Sequelize, DataTypes } = require ('sequelize');
 
@@ -61,6 +61,14 @@ const port = 3000
 
 
 
+
+ const express = require('express')
+const morgan = require('morgan')
+const sequelize = require('./db/sequelize')
+const app = express()
+const port = 3000
+
+sequelize.initDb()
 
 app.use(morgan('dev'))
 app.use(express.json())
