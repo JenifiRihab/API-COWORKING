@@ -1,23 +1,30 @@
 {
-  "name": "api-rest",
+  "name": "api-coworking_07_2023",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulDoazan/API-Coworking-07_2023.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulDoazan/API-Coworking-07_2023/issues"
+  },
+  "homepage": "https://github.com/PaulDoazan/API-Coworking-07_2023#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "express": "^4.18.2",
-    "mariadb": "^3.2.0"
+    "mariadb": "^3.2.0",
+    "sequelize": "^6.32.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
-    "mysql2": "^3.5.2",
-    "nodemon": "^3.0.1",
-    "sequelize": "^6.32.1",
-    "sequelize-auto": "^0.8.8"
+    "nodemon": "^3.0.1"
   }
 }
