@@ -5,25 +5,63 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-
-        name:{
+        name: {
             type: DataTypes.STRING,
-            allowNull:false,
-            validate:{
-                notEmpty:{
-                    msg:"le nom ne peut pas etre vide"
+            allowNull: false,
+            validate: {
+                notEmpty: {
+                    msg: 'Le nom ne peut pas être vide'
                 }
             },
-            unique:{
-                msg:"le nom est deja pris"
+            unique: {
+                msg: 'Le nom est déjà pris'
             }
         },
-
-        price: DataTypes.JSON,
-        
-        superficy: DataTypes.INTEGER,
-        capacity: DataTypes.INTEGER,
+        price: {
+            type: DataTypes.JSON,
+            validate: {
+                isPriceValid(value) {
+                    // let allNull = true
+                    // for (const key in value) {
+                    //     if (value[key] !== null) {
+                    //         allNull = false
+                    //     }
+                    // }
+                    // if (allNull) {
+                    //     throw new Error('Le coworking doit spécifié au moins un prix.');
+                    // }
+                    if (value.hasOwnProperty('hour') && value.hasOwnProperty('day') && value.hasOwnProperty('month')) {
+                        if (value.hour === null && value.day === null && value.month === null) {
+                            throw new Error('Le coworking doit spécifié au moins un prix.');
+                        }
+                    } else {
+                        throw new Error('La syntaxe des données est incorrecte.')
+                    }
+                }
+            }
+        },
+        superficy: {
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: {
+                    msg: 'La superficie doit être un nombre entier'
+                },
+                isNumeric: {
+                    msg: 'La superficie doit être un nombre'
+                }
+            }
+        },
+        capacity: {
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: {
+                    msg: 'La superficie doit être un nombre entier'
+                },
+                isNumeric: {
+                    msg: 'La superficie doit être un nombre'
+                }
+            }
+        },
         address: DataTypes.JSON,
-      
     });
 }

@@ -1,3 +1,4 @@
+const { UniqueConstraintError, ValidationError } = require('sequelize')
 const { CoworkingModel } = require('../db/sequelize')
 
 exports.findAllCoworkings = (req, res) => {
@@ -62,9 +63,13 @@ exports.updateCoworking = (req, res) => {
             }
         })
         .catch(error => {
+            if(error instanceof UniqueConstraintError || error
+                instanceof ValidationError){
             res.json({ message: error.message })
-        })
-}
+                }
+            })
+        }
+
 exports.deleteCoworking = (req, res) => {
     CoworkingModel
         .findByPk(req.params.id)
