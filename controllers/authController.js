@@ -26,6 +26,7 @@ exports.signUp = (req, res) => {
 exports.login = (req, res) => {
     UserModel.findOne({ where: { username: req.body.username } })
         .then(user => {
+            if (!user) return res.status(404).json({ message: `L'utilisateur n'existe pas` })
             bcrypt.compare(req.body.password, user.password)
                 .then(isValid => {
                     if (isValid) {
@@ -40,7 +41,7 @@ exports.login = (req, res) => {
                 })
         })
         .catch(error => {
-            console.log(error)
+            return res.status(500).json({ message: error.message })
         })
 }
 
@@ -50,16 +51,18 @@ exports.protect = (req, res, next) => {
     }
     const token = req.headers.authorization.split(' ')[1]
     if (token) {
-        jwt.verify(token, SECRET_KEY)
-            .then(decoded => {
-                req.username = decoded.data
-                next()
-            })
-            .catch(error => {
-                res.status(403).json({ message: `Le jeton n'est pas valide` })
-            })
+        try {
+            const decoded = jwt.verify(token, SECRET_KEY)
+            req.username = decoded.data
+            next()
+        } catch (error) {
+            res.status(403).json({ message: `Le jeton n'est pas valide` })
+        }
     } else {
-        res.json({ message: `Vous n'avez pas d'autorisation` })
+        res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
     }
+}
+
+exports.restrictTo = () => {
 
 }
