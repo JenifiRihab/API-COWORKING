@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const mockCoworkings = require('./mock-coworking')
+const mockCoworkings = require('./mock-coworkings')
 const bcrypt = require('bcrypt')
 
-const sequelize = new Sequelize('coworking-2023', 'root', '', {
+const sequelize = new Sequelize('coworking_07_2023', 'root', '', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false
@@ -33,7 +33,7 @@ const initDb = () => {
             bcrypt.hash('mdp', 10)
                 .then(hash => {
                     UserModel.create({
-                        username: 'Jean Dupont',
+                        username: 'Jean',
                         password: hash
                     })
                 })
