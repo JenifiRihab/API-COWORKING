@@ -3,7 +3,7 @@ const mockCoworkings = require('./mock-coworking')
 const bcrypt = require('bcrypt')
 const roles = ['user', 'editor', 'admin']
 
-const sequelize = new Sequelize('coworking-2023', 'root', '', {
+const sequelize = new Sequelize('coworking-yy2023', 'root', '', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false

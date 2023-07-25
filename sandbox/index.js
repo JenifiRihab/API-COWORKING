@@ -121,3 +121,6 @@ const sayHello = (seq, types) => {
 
 const model = sayHello('sequelize', 'DataTypes');
 console.log(nbResult, model)
+
+const btn = document.querySelector('.my-btn')
+btn.addEventListener.querySelector

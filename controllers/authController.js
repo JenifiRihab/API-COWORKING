@@ -4,6 +4,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SECRET_KEY = 'ma_clé_secrète'
 
+const rolesHierarchy ={
+    user:["user"],
+    editor:["user","editor"],
+    admin:["user","editor","admin"]
+}
+
 exports.signUp = (req, res) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -26,7 +32,7 @@ exports.signUp = (req, res) => {
 exports.login = (req, res) => {
     UserModel.findOne({ where: { username: req.body.username } })
         .then(user => {
-            if (!user) return res.status(404).json({ message: `L'utilisateur n'existe pas` })
+            if(!user) return res.status(404).json({message:`l'utilisateur n'existe pas`})
             bcrypt.compare(req.body.password, user.password)
                 .then(isValid => {
                     if (isValid) {
@@ -41,7 +47,7 @@ exports.login = (req, res) => {
                 })
         })
         .catch(error => {
-            return res.status(500).json({ message: error.message })
+            console.log(error)
         })
 }
 
@@ -51,18 +57,34 @@ exports.protect = (req, res, next) => {
     }
     const token = req.headers.authorization.split(' ')[1]
     if (token) {
-        try {
-            const decoded = jwt.verify(token, SECRET_KEY)
-            req.username = decoded.data
-            next()
-        } catch (error) {
-            res.status(403).json({ message: `Le jeton n'est pas valide` })
-        }
+        jwt.verify(token, SECRET_KEY)
+            .then(decoded => {
+                req.username = decoded.data
+                next()
+            })
+            .catch(error => {
+                res.status(403).json({ message: `Le jeton n'est pas valide` })
+            })
     } else {
-        res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
+        res.json({ message: `Vous n'etes pas authentifié` })
     }
+
 }
 
-exports.restrictTo = () => {
-
+exports.restrictTo = (roleParam) => {
+    return(req, res, next =>{
+        return roleModel.findByPk(user.RoleId)
+        .then(user =>{
+            if(rolesHierarchy[role.label].includes
+                (roleParam)){
+                return next ()
+                
+            } else{
+                return res.status(403).json({message:
+                    `vous n'avez pas es droits suffisants`})
+            }
+        }).catch(error => {
+            return res.status (500);json({message: error.message})
+        })
+    })
 }
