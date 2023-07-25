@@ -5,32 +5,27 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        username{
-            type:DataTypes.STRING,
-            uniqye:{
-                msg:'le nom est deja pris'
+        username: {
+            type: DataTypes.STRING,
+            unique: {
+                msg: 'Le nom est déjà pris'
             },
             allowNull: false,
-            validate:{
-                notNull:{
-                    msg: `il faut un nom d'utilasteur`
+            validate: {
+                notNull: {
+                    msg: `Il faut un nom d'utilisateur`
                 },
-                notEmpty:{
-                    msg:`le nom d'utilisateur est incorrect`
-                },
+                notEmpty: {
+                    msg: `Le nom d'utilisateur ne peut pas être vide`
+                }
             }
-      
         },
-
-        password : çç{
-            type:DataTypes.STRING,
-        },
-        roleId: {
-            type:DataTypes.INTEGER,
-            Reference:{
-            model: roleDataModel,
-            key:'id'
+        password: DataTypes.STRING
+    }, {
+        scopes: {
+            withoutPassword: {
+                attributes: { exclude: ['password'] }
             }
-    }
-})
+        }
+    })
 }
